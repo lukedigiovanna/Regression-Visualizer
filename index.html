@@ -20,6 +20,7 @@
                 <button onclick="generateRandom(randomness = 20.0)">
                     Generate Random Data
                 </button>
+                <button onclick="fitZoom()">Fit Zoom</button>
             </td>
             <td id="canvas" onclick="drawGraph()">
                 <canvas id="graph-canvas" width="800px" height="600px">
@@ -27,55 +28,10 @@
                 </canvas>
             </td>
             <td class="fields">
-                <p class="label">
-                    Training parameters:
-                </p>
-                <p class="label">
-                    Linear:
-                </p>
-                <button onclick="stepLinearFit()">  
-                    Step
-                </button>
-                <button onclick="linearFit()">
-                    Train
-                </button>
-                <p class="descriptor">
-                    Cost: <span id="linear-cost">0</span>
-                </p>
-                <p class="descriptor">
-                    y = <span id="slope">m</span>x + <span id="intercept">b</span>
-                </p>
-                <p class="label">
-                    Quadric:
-                </p>
-                <button onclick="stepQuadricFit()">  
-                    Step
-                </button>
-                <button onclick="quadricFit()">
-                    Train
-                </button>
-                <p class="descriptor">
-                    Cost: <span id="quadric-cost">0</span>
-                </p>
-                <p class="descriptor">
-                    y = <span id="quadric-a">a</span>x² + <span id="quadric-b">b</span>x + <span id="quadric-c">c</span>
-                </p>
-
-                <p class="label">
-                    Nth-Term:
-                </p>
-                <button onclick="stepNthTermFit()">  
-                    Step
-                </button>
-                <button onclick="nthTermFit()">
-                    Train
-                </button>
-                <p class="descriptor">
-                    Cost: <span id="nth-cost">0</span>
-                </p>
-                <p class="descriptor" id="nth-equation">
-                    y = ...
-                </p>
+                <div id="functions"> 
+                    <!-- this section is filled in by the java script code -->
+                </div>
+                <button onclick="addFunction()">Add function</button>
             </td>
         </table>   
         
