@@ -1,0 +1,56 @@
+
+@font-face {
+    font-family: AldotheApache;
+    src: url(AldotheApache.ttf);
+}
+
+body {
+    background-color: bisque;
+}
+
+h1.title {
+    text-align: center;
+    font-size: 50px;
+    font-family: AldotheApache;
+    color: darkslategray;
+    text-shadow: 2px 2px gray;
+}
+
+canvas#graph-canvas {
+    border: 7px groove darkslateblue;
+    border-radius: 3px;
+}
+
+table {
+    /*border: 1px solid black;*/
+    margin: auto;
+}
+
+td {
+    /*border: 1px solid black;*/
+}
+
+td.fields {
+    text-align: center;
+    width: 10vw;
+}
+
+textarea#data-text {
+    font-family: AldotheApache;
+    font-size: 15px;
+    resize: none;
+}
+
+p {
+    font-family: AldotheApache;
+}
+
+p.label {
+    font-size: 18px;
+    color: darkslategray;
+}
+
+p.descriptor {
+    font-size: 14px;
+    color: rgb(37, 64, 77);
+}
