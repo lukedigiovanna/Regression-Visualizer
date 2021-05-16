@@ -2,9 +2,9 @@ const canvas = document.getElementById("graph-canvas");
 const ctx = canvas.getContext("2d");
 
 const width = canvas.width, height = canvas.height;
-const rect = canvas.getBoundingClientRect();
-const cw = rect.right - rect.left;
-const ch = rect.bottom - rect.top;
+var rect = canvas.getBoundingClientRect();
+var cw = rect.right - rect.left;
+var ch = rect.bottom - rect.top;
 
 var dragDown = false;
 canvas.addEventListener("mousedown", function(event) {
@@ -12,6 +12,9 @@ canvas.addEventListener("mousedown", function(event) {
         dragDown = true;
 });
 canvas.addEventListener("mouseup", function(event) {
+    rect = canvas.getBoundingClientRect();
+    cw = rect.right - rect.left;
+    ch = rect.bottom - rect.top;
     dragDown = false;
     if (event.button == 0) {
         var x = event.clientX - rect.left,
@@ -95,7 +98,10 @@ function drawGraph() {
     ctx.fillStyle = "lightgray";
     ctx.fillRect(0, 0, width, height);
     retrieveData(); // update the data from the list
-
+    
+    ctx.fontFamily = 'AldotheApache';
+    ctx.fillStyle = 'rgb(70,70,70)';
+    
     let horizontalPlaces = Math.round(Math.log10(graphWidth));
     let horizontalFactor = Math.pow(10, -(horizontalPlaces - 1));
     let horizontalIncrement = Math.pow(10, horizontalPlaces - 1);
@@ -112,6 +118,7 @@ function drawGraph() {
         ctx.lineTo(xtgx(x), 0);
         ctx.lineTo(xtgx(x), height);
         ctx.stroke();
+        ctx.fillText(Math.round(x * 100000)/100000, xtgx(x + graphWidth * 0.005), ytgy(graphHeight * 0.005));
     }
     let verticalPlaces = Math.round(Math.log10(graphHeight));
     let verticalFactor = Math.pow(10, -(verticalPlaces - 1));
@@ -129,6 +136,8 @@ function drawGraph() {
         ctx.lineTo(0, ytgy(y));
         ctx.lineTo(width, ytgy(y));
         ctx.stroke();
+        if (y != 0)
+            ctx.fillText(Math.round(y * 100000)/100000, xtgx(graphWidth * 0.005), ytgy(y + graphHeight * 0.005));
     }
 
     if (data.length > 0) {

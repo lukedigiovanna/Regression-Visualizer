@@ -27,7 +27,7 @@ table {
 }
 
 td {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 td.fields {
@@ -60,4 +60,10 @@ button {
     font-size: 14px;
     border: 2px solid darkblue;
     border-radius: 2px; 
+}
+
+button.delete {
+    color: red;
+    background-color: transparent;
+    border: none;
 }

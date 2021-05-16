@@ -4,13 +4,23 @@ function sleep(ms) {
 }
 
 const functionsTag = document.getElementById("functions");
+const iterations = document.getElementById("iterations");
 
 var functions = []; 
+
+function deleteFunction(index) {
+    functions[index].stopTraining = true;
+    colors.push(functions[index].color);
+    functions.splice(index, 1);
+    updateDisplay();
+    drawGraph();
+}
+var colors = ["red","orange","green","blue","magenta"]
 
 function updateDisplay() {
     let s = "<p class='label'>Functions:</p>";
     for (let i = 0; i < functions.length; i++) {
-        s+="<p class='label'>"+functions[i].name+"</p>";
+        s+="<p class='label'>"+functions[i].name+" <span style='color:"+functions[i].color+"'>#</span><button class='delete' onmouseover=\"this.style='color:darkred;'\" onmouseout=\"this.style='color:red;'\" onclick=\"deleteFunction("+i+");\">X</button></p>";
         s+="<button onclick='functions["+i+"].fit();'>Train</button>";
         s+="<button onclick='functions["+i+"].reset();'>Reset</button>";
         s+="<p class='descriptor'>Cost: "+Math.round(functions[i].getCost()*100)/100+"</p>";
@@ -23,15 +33,31 @@ function updateDisplay() {
 }
 
 function addFunction() {
-    let order = parseInt(prompt("What degree?"))
-    new Regression(order+"th term", order);
+    var order = parseInt(prompt("What degree?"))
+    var name;
+    if (order < 0) return;
+    else if (order == 0) name = "Constant";
+    else if (order == 1) name = "Linear";
+    else if (order == 2) name = "Quadric";
+    else if (order == 3) name = "Cubic";
+    else {
+        digit = order % 10;
+        var suffix = "th";
+        if (digit == 1) suffix = "st";
+        else if (digit == 2) suffix = "nd";
+        else if (digit == 3) suffix = "rd";
+        name = order + suffix + " degree";
+    }
+    new Regression(name, order + 1);
     updateDisplay();
 }
 
+
 class Regression {
-    
     constructor(name, numberOfTerms) {
-        this.color = 'black';
+        let colorIndex = Math.floor(Math.random()*colors.length)
+        this.color = colors[colorIndex];
+        colors.splice(colorIndex, 1);
         this.name = name;
         this.terms = []
         for (let i = 0; i < numberOfTerms; i++)
@@ -46,6 +72,7 @@ class Regression {
     }
 
     draw() {
+        ctx.strokeStyle = this.color;
         ctx.beginPath();
         for (let gx = 0; gx <= width; gx += 5) {
             let x = gx / width * graphWidth + minX;
@@ -114,6 +141,7 @@ class Regression {
     async fit() {
         this.stopTraining = false;
         while (!this.stopTraining) {
+            for (let i = 0; i < parseInt(iterations.value); i++)
             this.stepFit();
             await sleep(20);
         }
@@ -139,31 +167,3 @@ class Regression {
         drawGraph();
     }
 }
-
-/*
-const linearCostP = document.getElementById("linear-cost");
-const slopeP = document.getElementById("slope");
-const interceptP = document.getElementById("intercept");
-
-const quadricCostP = document.getElementById("quadric-cost");
-const aP = document.getElementById("quadric-a");
-const bP = document.getElementById("quadric-b");
-const cP = document.getElementById("quadric-c");
-
-const nthTermCostP = document.getElementById("nth-cost");
-const nthEquationP = document.getElementById("nth-equation");
-
-function updateDisplay() {
-    linearCostP.innerHTML = Math.round(linearRegression.getCost() * 100) / 100;
-    slopeP.innerHTML = Math.round(linearRegression.terms[1] * 100) / 100;
-    interceptP.innerHTML = Math.round(linearRegression.terms[0] * 100) / 100;
-
-    quadricCostP.innerHTML = Math.round(quadricRegression.getCost() * 100) / 100;
-    aP.innerHTML = Math.round(quadricRegression.terms[2] * 100) / 100;
-    bP.innerHTML = Math.round(quadricRegression.terms[1] * 100) / 100;
-    cP.innerHTML = Math.round(quadricRegression.terms[0] * 100) / 100;
-
-    nthTermCostP.innerHTML = Math.round(nthTermRegression.getCost() * 100) / 100;
-    nthEquationP.innerHTML = nthTermRegression.getEquation();
-}
-*/
